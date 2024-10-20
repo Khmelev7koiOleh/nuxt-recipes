@@ -11,7 +11,7 @@
         </div>
         <div class="flex items-center gap-1">
           <Icon name="mdi:fire" style="color: #f79f1a" />
-          <span>{{ data?.caloriesPerServing }} calories</span>
+          <span>{{ data?.caloriesPerServing }}calories</span>
         </div>
         <div class="flex items-center gap-1">
           <Icon name="mdi:star" style="color: #f79f1a" />
