@@ -23,10 +23,3 @@ export interface RecipeResponse {
   skip: number;
   limit: number;
 }
-const getImageUrl = (imagePath: string) => {
-  // Check if the imagePath is already a full URL
-  if (imagePath.startsWith("http")) {
-    return imagePath; // Return as is if it's a full URL
-  }
-  return `https://cdn.dummyjson.com/${imagePath}`; // Otherwise prepend the base URL
-};
