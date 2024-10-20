@@ -1,4 +1,32 @@
-<!-- Problematik page -->
+<script setup lang="ts">
+import { type Recipe } from "../../../types/types";
+
+const { id } = useRoute().params;
+const { data, error } = await useFetch<Recipe>(
+  `https://dummyjson.com/recipes/${id}`
+);
+
+if (error.value) {
+  throw createError({
+    statusCode: error.value?.statusCode,
+    statusMessage: error.value?.statusMessage,
+  });
+}
+
+useSeoMeta({
+  title: data.value?.name,
+  description: "Recipes for you to cook!",
+  ogTitle: data.value?.name,
+  ogDescription: "Recipes for you to cook!",
+  ogImage: data.value?.image,
+  ogUrl: `http:localhost:3001/recipes/${data.value?.id}`,
+  twitterTitle: data.value?.name,
+  twitterDescription: "Recipes for you to cook!",
+  twitterImage: data.value?.image,
+  twitterCard: "summary",
+});
+</script>
+
 <template>
   <div class="flex flex-col max-w-screen-lg container py-20">
     <!-- Header -->
@@ -7,15 +35,15 @@
       <div class="flex gap-4 text-xl mb-6">
         <div class="flex items-center gap-1">
           <Icon name="mdi:clock-time-eight-outline" style="color: #f79f1a" />
-          <span>{{ data?.cookTimeMinutes }} minutes</span>
+          <span>{{ data?.cookTimeMinutes }}</span>
         </div>
         <div class="flex items-center gap-1">
           <Icon name="mdi:fire" style="color: #f79f1a" />
-          <span>{{ data?.caloriesPerServing }}calories</span>
+          <span>{{ data?.caloriesPerServing }}</span>
         </div>
         <div class="flex items-center gap-1">
           <Icon name="mdi:star" style="color: #f79f1a" />
-          <span>{{ data?.rating }} ({{ data?.reviewCount }} reviews)</span>
+          <span>{{ data?.rating }} ({{ data?.reviewCount }})</span>
         </div>
       </div>
       <hr />
@@ -34,7 +62,7 @@
     <div class="mb-8">
       <h2 class="text-3xl font-semibold mb-4">Ingredients</h2>
       <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-lg">
-        <li v-for="(ingredient, index) in data?.ingredients" :key="index">
+        <li v-for="ingredient in data?.ingredients">
           <label class="flex gap-2 items-center">
             <input class="hidden peer" type="checkbox" />
             <div
@@ -54,7 +82,6 @@
       <ul class="flex flex-col text-lg gap-4">
         <li
           v-for="(instruction, index) in data?.instructions"
-          :key="index"
           class="flex gap-2"
         >
           <span
@@ -69,37 +96,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useRoute, useFetch, useSeoMeta, createError } from "#app"; // Import from #app
-import { type Recipe } from "../../../types/types";
-
-const { id } = useRoute().params; // Get the recipe ID from the route params
-const { data, error } = await useFetch<Recipe>(
-  `https://dummyjson.com/recipes/${id}`
-);
-
-if (error.value) {
-  throw createError({
-    statusCode: error.value?.statusCode,
-    statusMessage: error.value?.statusMessage,
-  });
-}
-
-// SEO metadata
-useSeoMeta({
-  title: data.value?.name,
-  description: "Recipes for you to cook!",
-  ogTitle: data.value?.name,
-  ogDescription: "Recipes for you to cook!",
-  ogImage: data.value?.image,
-  ogUrl: `http://localhost:3001/recipes/${data.value?.id}`,
-  twitterTitle: data.value?.name,
-  twitterDescription: "Recipes for you to cook!",
-  twitterImage: data.value?.image,
-  twitterCard: "summary",
-});
-</script>
-
-<style scoped>
-/* Optional styling */
-</style>
+<style scoped></style>

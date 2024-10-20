@@ -1,17 +1,26 @@
 <script setup lang="ts">
-// definePageMeta({
-// layout: "login",
-// });
-// const { data, error } = await useAsyncData("recipes", () =>
-//   $fetch("https://dummyjson.com/recipes?limit=12")
-// );
+import { type RecipeResponse } from "../../types/types";
+
 const { data, error } = await useFetch<RecipeResponse>(
   "https://dummyjson.com/recipes?limit=12"
 );
-import { type RecipeResponse } from "../../types/types";
+
+useSeoMeta({
+  title: "Nuxtcipes",
+  description: "Recipes for you to cook!",
+  ogTitle: "Nuxtcipes",
+  ogDescription: "Recipes for you to cook!",
+  ogImage: "/nuxt-course-hero.png",
+  ogUrl: `http:localhost:3000`,
+  twitterTitle: "Nuxtcipes",
+  twitterDescription: "Recipes for you to cook!",
+  twitterImage: "nuxt-course-hero.png",
+  twitterCard: "summary",
+});
 </script>
+
 <template>
-  <div>
+  <main>
     <section class="bg-[#f1f1f1]">
       <div
         class="container flex flex-col lg:flex-row items-center py-20 gap-10"
@@ -48,8 +57,7 @@ import { type RecipeResponse } from "../../types/types";
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8"
       >
         <div
-          v-for="(recipe, index) in data?.recipes"
-          :key="index"
+          v-for="recipe in data?.recipes"
           class="flex flex-col shadow rounded-md"
         >
           <NuxtImg
@@ -96,7 +104,5 @@ import { type RecipeResponse } from "../../types/types";
         Opps, something went wrong. Please try again later
       </p>
     </section>
-  </div>
+  </main>
 </template>
-
-<style lang="scss" scoped></style>
