@@ -1,31 +1,20 @@
 <script setup lang="ts">
 import { type RecipeResponse } from "../../types/types";
 
-// Fetch recipes data
 const { data, error } = await useFetch<RecipeResponse>(
   "https://dummyjson.com/recipes?limit=12"
 );
 
-// Define the getImageUrl function
-const getImageUrl = (imagePath: string) => {
-  // Check if the imagePath is already a full URL
-  if (imagePath.startsWith("http")) {
-    return imagePath; // Return as is if it's a full URL
-  }
-  return `https://cdn.dummyjson.com/${imagePath}`; // Otherwise prepend the base URL
-};
-
-// Set SEO metadata
 useSeoMeta({
   title: "Nuxtcipes",
   description: "Recipes for you to cook!",
   ogTitle: "Nuxtcipes",
   ogDescription: "Recipes for you to cook!",
   ogImage: "/nuxt-course-hero.png",
-  ogUrl: `http://localhost:3000`,
+  ogUrl: `http:localhost:3000`,
   twitterTitle: "Nuxtcipes",
   twitterDescription: "Recipes for you to cook!",
-  twitterImage: "/nuxt-course-hero.png",
+  twitterImage: "nuxt-course-hero.png",
   twitterCard: "summary",
 });
 </script>
@@ -53,6 +42,8 @@ useSeoMeta({
           <NuxtImg
             sizes="xs:100vw sm:667px"
             src="/nuxt-course-hero.png"
+            format="webp"
+            densities="x1"
             alt=""
           />
         </div>
@@ -67,12 +58,13 @@ useSeoMeta({
       >
         <div
           v-for="recipe in data?.recipes"
-          :key="recipe.id"
           class="flex flex-col shadow rounded-md"
         >
           <NuxtImg
-            :src="getImageUrl(recipe.image)"
+            :src="recipe.image"
             sizes="xs:100vw sm:50vw lg:400px"
+            format="webp"
+            densities="x1"
             alt=""
             class="rounded-t-md"
           />
@@ -109,7 +101,7 @@ useSeoMeta({
         </div>
       </div>
       <p v-else class="text-xl">
-        Oops, something went wrong. Please try again later.
+        Opps, something went wrong. Please try again later
       </p>
     </section>
   </main>
