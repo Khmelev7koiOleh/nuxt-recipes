@@ -1,6 +1,6 @@
-//https://nuxt.com/docs/api/configuration/nuxt-config
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-04-03",
+  compatibilityDate: "2024-10-14",
 
   future: {
     compatibilityVersion: 4,
@@ -12,12 +12,15 @@ export default defineNuxtConfig({
     resetAsyncDataToUndefined: true,
     templateUtils: true,
     relativeWatchPaths: true,
-    //normalizeComponentNames: false,
     defaults: {
       useAsyncData: {
         deep: true,
       },
     },
+  },
+
+  image: {
+    domains: ["https://cdn.dummyjson.com"],
   },
 
   unhead: {
@@ -27,12 +30,14 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
+
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/google-fonts",
     "@nuxt/icon",
     "@nuxt/image",
   ],
+
   googleFonts: {
     families: {
       Montserrat: true,
