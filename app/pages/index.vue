@@ -5,13 +5,21 @@ const { data, error } = await useFetch<RecipeResponse>(
   "https://dummyjson.com/recipes?limit=12"
 );
 
+const getImageUrl = (imagePath: string) => {
+  // Check if the imagePath is already a full URL
+  if (imagePath.startsWith("http")) {
+    return imagePath; // Return as is if it's a full URL
+  }
+  return `https://cdn.dummyjson.com/${imagePath}`; // Otherwise prepend the base URL
+};
+
 useSeoMeta({
   title: "Nuxtcipes",
   description: "Recipes for you to cook!",
   ogTitle: "Nuxtcipes",
   ogDescription: "Recipes for you to cook!",
   ogImage: "/nuxt-course-hero.png",
-  ogUrl: `http:localhost:3000`,
+  ogUrl: `http://localhost:3000`,
   twitterTitle: "Nuxtcipes",
   twitterDescription: "Recipes for you to cook!",
   twitterImage: "nuxt-course-hero.png",
@@ -61,7 +69,7 @@ useSeoMeta({
           class="flex flex-col shadow rounded-md"
         >
           <NuxtImg
-            :src="recipe.image"
+            :src="getImageUrl(recipe.image)"
             sizes="xs:100vw sm:50vw lg:400px"
             format="webp"
             densities="x1"
